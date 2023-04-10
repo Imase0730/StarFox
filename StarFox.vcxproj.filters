@@ -43,6 +43,7 @@
     <ClInclude Include="ImaseLib\DebugFont.h">
       <Filter>ImaseLib</Filter>
     </ClInclude>
+    <ClInclude Include="Meter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -66,6 +67,7 @@
     <ClCompile Include="ImaseLib\DebugFont.cpp">
       <Filter>ImaseLib</Filter>
     </ClCompile>
+    <ClCompile Include="Meter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -82,5 +84,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Textures\floor.png">
+      <Filter>Assets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Textures\shadow.png">
+      <Filter>Assets</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

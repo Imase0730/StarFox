@@ -6,6 +6,7 @@
 #include "Game.h"
 #include <sstream>
 #include "TestScene.h"
+#include "GameScene.h"
 
 extern void ExitGame() noexcept;
 
@@ -36,11 +37,10 @@ void Game::Initialize(HWND window, int width, int height)
     // TODO: Change the timer settings if you want something other than the default variable timestep mode.
     // e.g. for 60 FPS fixed timestep update logic, call:
     
-    //m_timer.SetFixedTimeStep(true);
-    //m_timer.SetTargetElapsedSeconds(1.0 / 60);
+    m_timer.SetFixedTimeStep(true);
+    m_timer.SetTargetElapsedSeconds(1.0 / 60);
     
-    // タイトルシーンへ
-    m_sceneManager->SetScene<TestScene>();
+    m_sceneManager->SetScene<GameScene>();
 }
 
 #pragma region Frame Update
@@ -206,6 +206,7 @@ void Game::CreateDeviceDependentResources()
     // シーンへ渡すユーザーリソースの設定
     m_userResources->SetStepTimerStates(&m_timer);
     m_userResources->SetDeviceResources(m_deviceResources.get());
+    m_userResources->SetKeyboardStateTracker(&m_tracker);
     m_userResources->SetCommonStates(m_states.get());
     m_userResources->SetDebugFont(m_font.get());
 

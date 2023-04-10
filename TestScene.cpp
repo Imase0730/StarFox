@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TestScene.h"
 #include "WICTextureLoader.h"
+#include "GameScene.h"
 
 using namespace DirectX;
 
@@ -22,6 +23,14 @@ void TestScene::Update(float elapsedTime)
 	m_world = SimpleMath::Matrix::CreateRotationZ(totalTime / 2.f)
 		* SimpleMath::Matrix::CreateRotationY(totalTime)
 		* SimpleMath::Matrix::CreateRotationX(totalTime * 2.f);
+
+	// シーンを変更
+	auto tracker = GetUserResources()->GetKeyboardStateTracker();
+	if (tracker->pressed.A)
+	{
+		ChangeScene<GameScene>();
+	}
+
 }
 
 // 描画
@@ -40,6 +49,9 @@ void TestScene::Render()
 // 終了
 void TestScene::Finalize()
 {
+	m_spriteBatch.reset();
+	m_shape.reset();
+	m_background.Reset();
 }
 
 // デバイスに依存する作成処理
@@ -71,7 +83,5 @@ void TestScene::CreateWindowSizeDependentResources()
 // デバイスロスト時の処理
 void TestScene::OnDeviceLost()
 {
-	m_spriteBatch.reset();
-	m_shape.reset();
-	m_background.Reset();
+	Finalize();
 }

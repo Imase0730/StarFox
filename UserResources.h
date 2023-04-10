@@ -24,6 +24,9 @@ private:
 	// デバイスリソース
 	DX::DeviceResources* m_deviceResources;
 
+	// キーボードステートトラッカー
+	DirectX::Keyboard::KeyboardStateTracker* m_tracker;
+
 	// 共通ステート
 	DirectX::CommonStates* m_states;
 
@@ -56,6 +59,12 @@ public:
 
 	// デバイスリソースを取得する関数
 	const DX::DeviceResources* GetDeviceResources() { return m_deviceResources; }
+
+	// キーボードステートトラッカーを設定する関数
+	void SetKeyboardStateTracker(DirectX::Keyboard::KeyboardStateTracker* tracker) { m_tracker = tracker; }
+
+	// キーボードステートトラッカーを取得する関数
+	const DirectX::Keyboard::KeyboardStateTracker* GetKeyboardStateTracker() { return m_tracker; }
 
 	// 共通ステートを設定する関数
 	void SetCommonStates(DirectX::CommonStates* states) { m_states = states; }

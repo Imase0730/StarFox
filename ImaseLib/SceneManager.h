@@ -84,6 +84,9 @@ namespace Imase
 		// 実行中のシーンへのポインタ
 		Scene<T>* m_scene;
 
+		// 次のシーンへのポインタ
+		Scene<T>* m_nextScene;
+
 		// シーン削除関数
 		void DeleteScene();
 
@@ -93,6 +96,7 @@ namespace Imase
 		SceneManager(T* userResources = nullptr)
 			: m_userResources(userResources)
 			, m_scene(nullptr)
+			, m_nextScene(nullptr)
 		{
 		};
 
@@ -118,6 +122,10 @@ namespace Imase
 		template <class U>
 		void SetScene();
 
+		// 次のシーンの設定関数
+		template <class U>
+		void SetNextScene();
+
 		// ユーザーリソース設定関数
 		void SetUserResources(T* userResources) { m_userResources = userResources; }
 
@@ -131,7 +139,7 @@ namespace Imase
 	template <class U>
 	void Scene<T>::ChangeScene()
 	{
-		m_sceneManager->SetScene<U>();
+		m_sceneManager->SetNextScene<U>();
 	}
 
 	// ユーザーが設定したリソース取得関数
@@ -163,6 +171,18 @@ namespace Imase
 		m_scene->Initialize();
 	}
 
+	// シーンの設定関数
+	template <class T>
+	template <class U>
+	void SceneManager<T>::SetNextScene()
+	{
+		if (!m_nextScene)
+		{
+			// シーンを生成
+			m_nextScene = new U;
+		}
+	}
+
 	// 更新関数
 	template <class T>
 	void SceneManager<T>::Update(float elapsedTime)
@@ -173,13 +193,34 @@ namespace Imase
 		if (kb.Escape) PostQuitMessage(0);
 #endif
 
+		// シーンの更新
 		if (m_scene) m_scene->Update(elapsedTime);
+
+		// シーンの切り替え処理
+		if (m_nextScene)
+		{
+			DeleteScene();
+
+			assert(m_scene == nullptr);
+
+			// シーンを切り替え
+			m_scene = m_nextScene;
+
+			m_nextScene = nullptr;
+
+			// シーンにシーンマネージャーへのポインタを設定
+			m_scene->SetSceneManager(this);
+
+			// シーンの初期化処理
+			m_scene->Initialize();
+		}
 	}
 
 	// 描画関数
 	template <class T>
 	void SceneManager<T>::Render()
 	{
+		// シーンの描画
 		if (m_scene) m_scene->Render();
 	}
 
