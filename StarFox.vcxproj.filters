@@ -44,6 +44,9 @@
       <Filter>ImaseLib</Filter>
     </ClInclude>
     <ClInclude Include="Meter.h" />
+    <ClInclude Include="MotosScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -68,6 +71,9 @@
       <Filter>ImaseLib</Filter>
     </ClCompile>
     <ClCompile Include="Meter.cpp" />
+    <ClCompile Include="MotosScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -90,6 +96,15 @@
       <Filter>Assets</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Textures\shadow.png">
+      <Filter>Assets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Textures\push_space.png">
+      <Filter>Assets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Textures\title.png">
+      <Filter>Assets</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Textures\title_tile.png">
       <Filter>Assets</Filter>
     </ImageContentTask>
   </ItemGroup>

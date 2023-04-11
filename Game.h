@@ -48,6 +48,8 @@ public:
     // Properties
     void GetDefaultSize( int& width, int& height ) const noexcept;
 
+    void ChangeFullscreen(bool value);
+
 private:
 
     void Update(DX::StepTimer const& timer);

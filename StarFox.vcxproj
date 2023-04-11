@@ -186,6 +186,7 @@
     <ClInclude Include="ImaseLib\DebugFont.h" />
     <ClInclude Include="ImaseLib\SceneManager.h" />
     <ClInclude Include="Meter.h" />
+    <ClInclude Include="MotosScene.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StepTimer.h" />
     <ClInclude Include="TestScene.h" />
@@ -204,6 +205,7 @@
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Meter.cpp" />
+    <ClCompile Include="MotosScene.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -218,6 +220,24 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico" />
+    <ImageContentTask Include="Textures\push_space.png">
+      <Compress Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BC3_UNORM</Compress>
+      <GeneratePremultipliedAlpha Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GeneratePremultipliedAlpha>
+      <GenerateMips Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateMips>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources/Textures/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+    <ImageContentTask Include="Textures\title.png">
+      <Compress Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BC3_UNORM</Compress>
+      <GeneratePremultipliedAlpha Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GeneratePremultipliedAlpha>
+      <GenerateMips Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateMips>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources/Textures/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+    <ImageContentTask Include="Textures\title_tile.png">
+      <Compress Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BC3_UNORM</Compress>
+      <GeneratePremultipliedAlpha Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GeneratePremultipliedAlpha>
+      <GenerateMips Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateMips>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources/Textures/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <ImageContentTask Include="Textures\shadow.png">
       <Compress Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">BC3_UNORM</Compress>
       <GeneratePremultipliedAlpha Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GeneratePremultipliedAlpha>

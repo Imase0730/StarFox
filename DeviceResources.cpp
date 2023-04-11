@@ -323,8 +323,11 @@ void DeviceResources::CreateWindowSizeDependentResources()
         swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
         swapChainDesc.Flags = (m_options & c_AllowTearing) ? DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING : 0u;
 
+        swapChainDesc.Flags |= DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;//
+
         DXGI_SWAP_CHAIN_FULLSCREEN_DESC fsSwapChainDesc = {};
         fsSwapChainDesc.Windowed = TRUE;
+        fsSwapChainDesc.Scaling = DXGI_MODE_SCALING_STRETCHED; //
 
         // Create a SwapChain from a Win32 window.
         ThrowIfFailed(m_dxgiFactory->CreateSwapChainForHwnd(

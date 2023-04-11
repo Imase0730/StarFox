@@ -7,6 +7,7 @@
 #include <sstream>
 #include "TestScene.h"
 #include "GameScene.h"
+#include "MotosScene.h"
 
 extern void ExitGame() noexcept;
 
@@ -40,7 +41,7 @@ void Game::Initialize(HWND window, int width, int height)
     m_timer.SetFixedTimeStep(true);
     m_timer.SetTargetElapsedSeconds(1.0 / 60);
     
-    m_sceneManager->SetScene<GameScene>();
+    m_sceneManager->SetScene<MotosScene>();
 }
 
 #pragma region Frame Update
@@ -177,9 +178,15 @@ void Game::OnWindowSizeChanged(int width, int height)
 void Game::GetDefaultSize(int& width, int& height) const noexcept
 {
     // TODO: Change to desired default window size (note minimum size is 320x200).
-    width = 800;
-    height = 600;
+    width = 1280;
+    height = 720;
 }
+
+void Game::ChangeFullscreen(bool value)
+{
+    m_deviceResources->GetSwapChain()->SetFullscreenState(value, nullptr);
+}
+
 #pragma endregion
 
 #pragma region Direct3D Resources

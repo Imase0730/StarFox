@@ -193,9 +193,6 @@ namespace Imase
 		if (kb.Escape) PostQuitMessage(0);
 #endif
 
-		// シーンの更新
-		if (m_scene) m_scene->Update(elapsedTime);
-
 		// シーンの切り替え処理
 		if (m_nextScene)
 		{
@@ -214,6 +211,10 @@ namespace Imase
 			// シーンの初期化処理
 			m_scene->Initialize();
 		}
+
+		// シーンの更新
+		if (m_scene) m_scene->Update(elapsedTime);
+
 	}
 
 	// 描画関数
