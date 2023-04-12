@@ -95,8 +95,13 @@ void Game::Render()
 
     // fpsの表示
     std::wostringstream oss;
-    oss << "fps:" << m_timer.GetFramesPerSecond();
+//    oss << "fps:" << m_timer.GetFramesPerSecond();
+//    m_font->AddString(oss.str().c_str(), SimpleMath::Vector2(0.0f, 0.0f));
+
+    auto const size = m_deviceResources->GetOutputSize();
+    oss << "size:" << size.right << "," << size.bottom;
     m_font->AddString(oss.str().c_str(), SimpleMath::Vector2(0.0f, 0.0f));
+
 
     // デバッグフォントの描画
     m_font->Render(m_states.get());
@@ -180,6 +185,11 @@ void Game::GetDefaultSize(int& width, int& height) const noexcept
     // TODO: Change to desired default window size (note minimum size is 320x200).
     width = 1280;
     height = 720;
+}
+
+void Game::SetFullScreenMode(bool value)
+{
+    m_deviceResources->SetFullScreenMode(value);
 }
 
 void Game::ChangeFullscreen(bool value)

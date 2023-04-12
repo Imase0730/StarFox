@@ -42,7 +42,7 @@ void MotosScene::Render()
 	// Œã‚ë‚Ìƒ^ƒCƒ‹‚Ì•`‰æ
 	for (int j = 0; j < 9; j++)
 	{
-		for (int i = 0; i < 14; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			m_spriteBatch->Draw(m_tileTexture.Get(),
 				SimpleMath::Vector2(i * 100.0f - m_scroll, (j - 1) * 100.0f + m_scroll));

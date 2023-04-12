@@ -48,6 +48,8 @@ public:
     // Properties
     void GetDefaultSize( int& width, int& height ) const noexcept;
 
+    void SetFullScreenMode(bool value);
+
     void ChangeFullscreen(bool value);
 
 private:

@@ -34,6 +34,7 @@ extern "C"
 // Entry point
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
+    
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -51,6 +52,20 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     mouse = std::make_unique<Mouse>();
 
     g_game = std::make_unique<Game>();
+
+    // ★追加
+    static bool s_fullscreen = false;
+    
+    // 画面モード選択
+    if (MessageBox(NULL, L"フルスクリーンにしますか？", L"画面モード設定", MB_YESNO) == IDYES)
+    {
+        s_fullscreen = true;
+    }
+    else
+    {
+        s_fullscreen = false;
+    }
+    g_game->SetFullScreenMode(s_fullscreen);
 
     // Register class and create window
     {
@@ -96,8 +111,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
         g_game->Initialize(hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-        //g_game->ChangeFullscreen(true);
-
+        // ★追加
+        if (s_fullscreen) g_game->ChangeFullscreen(true);
     }
 
     // Main message loop
@@ -115,7 +130,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         }
     }
 
-    g_game->ChangeFullscreen(false);
+    // ★追加
+    if (s_fullscreen) g_game->ChangeFullscreen(false);
 
     g_game.reset();
 
@@ -130,7 +146,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     static bool s_in_sizemove = false;
     static bool s_in_suspend = false;
     static bool s_minimized = false;
-    static bool s_fullscreen = false;
+    //static bool s_fullscreen = false;
     // TODO: Set s_fullscreen to true if defaulting to fullscreen.
 
     auto game = reinterpret_cast<Game*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
@@ -164,29 +180,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
-    case WM_SIZE:
-        if (wParam == SIZE_MINIMIZED)
-        {
-            if (!s_minimized)
-            {
-                s_minimized = true;
-                if (!s_in_suspend && game)
-                    game->OnSuspending();
-                s_in_suspend = true;
-            }
-        }
-        else if (s_minimized)
-        {
-            s_minimized = false;
-            if (s_in_suspend && game)
-                game->OnResuming();
-            s_in_suspend = false;
-        }
-        else if (!s_in_sizemove && game)
-        {
-            game->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
-        }
-        break;
+    // ★削除
+    //case WM_SIZE:
+    //    if (wParam == SIZE_MINIMIZED)
+    //    {
+    //        if (!s_minimized)
+    //        {
+    //            s_minimized = true;
+    //            if (!s_in_suspend && game)
+    //                game->OnSuspending();
+    //            s_in_suspend = true;
+    //        }
+    //    }
+    //    else if (s_minimized)
+    //    {
+    //        s_minimized = false;
+    //        if (s_in_suspend && game)
+    //            game->OnResuming();
+    //        s_in_suspend = false;
+    //    }
+    //    else if (!s_in_sizemove && game)
+    //    {
+    //        game->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
+    //    }
+    //    break;
 
     case WM_ENTERSIZEMOVE:
         s_in_sizemove = true;
@@ -253,37 +270,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_SYSKEYDOWN:
-        if (wParam == VK_RETURN && (lParam & 0x60000000) == 0x20000000)
-        {
-            // Implements the classic ALT+ENTER fullscreen toggle
-            if (s_fullscreen)
-            {
-                g_game->ChangeFullscreen(false);
-                //SetWindowLongPtr(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-                //SetWindowLongPtr(hWnd, GWL_EXSTYLE, 0);
+        // ★削除
+        //if (wParam == VK_RETURN && (lParam & 0x60000000) == 0x20000000)
+        //{
+        //    // Implements the classic ALT+ENTER fullscreen toggle
+        //    if (s_fullscreen)
+        //    {
+        //        //SetWindowLongPtr(hWnd, GWL_STYLE, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+        //        //SetWindowLongPtr(hWnd, GWL_EXSTYLE, 0);
 
-                //int width = 800;
-                //int height = 600;
-                //if (game)
-                //    game->GetDefaultSize(width, height);
+        //        //int width = 800;
+        //        //int height = 600;
+        //        //if (game)
+        //        //    game->GetDefaultSize(width, height);
 
-                //ShowWindow(hWnd, SW_SHOWNORMAL);
+        //        //ShowWindow(hWnd, SW_SHOWNORMAL);
 
-                //SetWindowPos(hWnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
-            }
-            else
-            {
-                g_game->ChangeFullscreen(true);
- /*               SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP);
-                SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
+        //        //SetWindowPos(hWnd, HWND_TOP, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
+        //        g_game->ChangeFullscreen(false);
+        //    }
+        //    else
+        //    {
+        //        //SetWindowLongPtr(hWnd, GWL_STYLE, WS_POPUP);
+        //        //SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 
-                SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+        //        //SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 
-                ShowWindow(hWnd, SW_SHOWMAXIMIZED);*/
-            }
+        //        //ShowWindow(hWnd, SW_SHOWMAXIMIZED);
+        //        g_game->ChangeFullscreen(true);
+        //    }
 
-            s_fullscreen = !s_fullscreen;
-        }
+        //    s_fullscreen = !s_fullscreen;
+        //}
         Keyboard::ProcessMessage(message, wParam, lParam);
         break;
 
